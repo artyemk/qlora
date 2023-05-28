@@ -518,6 +518,14 @@ def make_data_module(tokenizer: transformers.PreTrainedTokenizer, args) -> Dict:
     # LongForm
     elif args.dataset == 'longform':
         dataset = load_dataset("akoksal/LongForm")
+
+    elif args.dataset == 'guanaco':
+        dataset = load_dataset("timdettmers/openassistant-guanaco")
+        dataset = dataset.map(lambda x: {
+            'input': '',
+            'output': x['text']
+        }, remove_columns=['text'])
+
     elif args.dataset == 'vicuna':
         raise NotImplementedError("Vicuna data was not released.")
     else:
